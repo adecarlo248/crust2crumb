@@ -1,4 +1,5 @@
 (function () {
+  var ENDPOINT = "https://hook.us2.make.com/183lc2uovmf2dgmm8ntozq4rlvytpb11";
   var plans = {
     christmas: "Christmas / Holiday Party",
     truck: "Truck at Your Event",
@@ -24,7 +25,10 @@
   var error = document.getElementById("book-error");
   var nextBtn = document.getElementById("sticky-next");
   var backBtn = document.getElementById("sticky-back");
-  var mailLink = document.getElementById("mail-fallback");
+  var mailLink = document.getElementById("inquire-mailto");
+  var fallback = document.getElementById("mail-fallback");
+  var done = document.getElementById("inquire-done");
+  var sending = false;
 
   function params() {
     var q = new URLSearchParams(window.location.search).get("plan");
@@ -161,8 +165,10 @@
     if (state.clear) park.push("Overhead clearance is OK");
     if (state.room) park.push("Room at the service window");
     if (state.ok) park.push("OK to park");
-    var showUp = state.serve;
-    if (!showUp && state.plan === "truck") showUp = "Truck";
+    var serveLabels = { truck: "Truck on site", dropoff: "Drop-off", unsure: "Not sure" };
+    var fulfillLabels = { pickup: "Pickup", delivery: "Delivery" };
+    var showUp = serveLabels[state.serve] || "";
+    if (!showUp && state.plan === "truck") showUp = "Truck on site";
     if (!showUp && (state.plan === "trays" || state.plan === "boards")) showUp = "Drop-off or pickup";
     return [
       ["Plan", plans[state.plan] || ""],
@@ -174,7 +180,7 @@
       ["Show up", showUp || ""],
       ["Venue", state.venue || ""],
       ["Parking", park.join(", ")],
-      ["Pickup / delivery", state.fulfill || ""],
+      ["Pickup / delivery", fulfillLabels[state.fulfill] || ""],
       ["Address", state.drop || ""],
       ["Sandwiches", state.sandwiches.join(", ")],
       ["Size", sizes[state.size] || ""],
@@ -211,14 +217,80 @@
     });
   }
 
-  function mailHref() {
-    var body = lines().filter(function (pair) { return pair[1]; }).map(function (pair) {
-      return pair[0] + ": " + pair[1];
-    }).join("\n");
-    body += "\n\nThis inquiry was prepared on crust2crumb.ca. The date is not booked and no payment was taken.";
+  function subjectLine() {
     var subject = "Crust 2 Crumb event inquiry";
     if (plans[state.plan]) subject += " — " + plans[state.plan];
+    return subject;
+  }
+
+  function bodyText() {
+    return lines().filter(function (pair) { return pair[1]; }).map(function (pair) {
+      return pair[0] + ": " + pair[1];
+    }).join("\n");
+  }
+
+  function mailHref(subject, body) {
     return "mailto:Crust2crumbft@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  }
+
+  function showFailure(subject, body) {
+    sending = false;
+    if (nextBtn) nextBtn.disabled = false;
+    showError("The message was not sent. Email Crust2crumbft@gmail.com instead.");
+    if (mailLink) mailLink.href = mailHref(subject, body);
+    if (fallback) fallback.hidden = false;
+  }
+
+  function sendInquiry() {
+    var trap = document.getElementById("company-website");
+    if (trap && trap.value.trim()) return;
+    if (sending) return;
+    var subject = subjectLine();
+    var body = bodyText();
+    var when = [state.date, dayparts[state.daypart] || "", state.time].filter(Boolean).join(", ");
+    sending = true;
+    if (nextBtn) nextBtn.disabled = true;
+    if (fallback) fallback.hidden = true;
+    showError("");
+    fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        form: "inquire",
+        subject: subject,
+        name: state.name,
+        phone: state.phone,
+        email: state.email,
+        details: state.notes || "",
+        location: state.venue || state.drop || "",
+        when: when,
+        allergies: state.diet || "",
+        body: body,
+        company_website: ""
+      })
+    }).then(function (response) {
+      return response.json().then(function (data) {
+        return { status: response.status, data: data };
+      }).catch(function () {
+        return { status: response.status, data: null };
+      });
+    }).then(function (result) {
+      if (result.status === 200 && result.data && result.data.ok === true) {
+        sending = false;
+        if (state.step !== 7) return;
+        if (done) {
+          done.hidden = false;
+          done.scrollIntoView({ block: "start" });
+        }
+        if (nextBtn) nextBtn.hidden = true;
+        if (fallback) fallback.hidden = true;
+        showError("");
+        return;
+      }
+      showFailure(subject, body);
+    }).catch(function () {
+      showFailure(subject, body);
+    });
   }
 
   function go(step) {
@@ -234,13 +306,12 @@
     });
     showError("");
     backBtn.hidden = step <= 1;
-    nextBtn.textContent = step === 7 ? "Open email to Crust2crumbft@gmail.com" : "Next";
+    nextBtn.textContent = step === 7 ? "Send message" : "Next";
+    nextBtn.hidden = false;
+    nextBtn.disabled = false;
     var heading = document.querySelector('[data-step="' + step + '"] h2');
     if (heading) heading.focus();
-    if (step === 7) {
-      fill("review-summary");
-      if (mailLink) mailLink.href = mailHref();
-    }
+    if (step === 7) fill("review-summary");
   }
 
   document.body.addEventListener("click", function (event) {
@@ -280,9 +351,7 @@
       var problem = validate(state.step);
       if (problem) { showError(problem); return; }
       if (state.step === 7) {
-        var href = mailHref();
-        if (mailLink) mailLink.href = href;
-        window.location.href = href;
+        sendInquiry();
         return;
       }
       go(state.step + 1);

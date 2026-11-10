@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#c4162c">
   <title>Inquire | Crust 2 Crumb Food Truck</title>
-  <meta name="description" content="Inquire about Christmas party catering and other events with Crust 2 Crumb Food Truck. This opens an email. It does not book a date or take a payment.">
+  <meta name="description" content="Inquire about Christmas party catering and other events with Crust 2 Crumb Food Truck. Sending a message does not book a date or take a payment.">
   <link rel="icon" href="../assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +38,7 @@
         <div class="page-intro">
           <p class="kicker">Crust 2 Crumb</p>
           <h1>Inquire</h1>
-          <p class="lede">Christmas party catering is the place to start. This plans the request, then opens an email to Crust2crumbft@gmail.com. It does not book the date or take a payment.</p>
+          <p class="lede">Christmas party catering is the place to start. This plans the request, then sends it to Crust2crumbft@gmail.com. It does not book the date or take a payment.</p>
         </div>
         <ol class="progress" aria-label="Booking steps">
           <li><button type="button" data-goto="1">1 Plan</button></li>
@@ -198,7 +198,11 @@
 
           <section class="step" data-step="6" hidden>
             <h2 tabindex="-1">Contact</h2>
-            <p>These details stay on this page until you open the email on the next step.</p>
+            <p>These details stay on this page until you send the message on the next step.</p>
+            <div class="company-website" aria-hidden="true">
+              <label for="company-website">Company website</label>
+              <input id="company-website" name="company_website" type="text" autocomplete="off" tabindex="-1" aria-hidden="true">
+            </div>
             <div class="field"><label for="guest-name">Name</label><input id="guest-name" autocomplete="name"></div>
             <div class="field"><label for="guest-phone">Phone</label><input id="guest-phone" type="tel" autocomplete="tel" inputmode="tel"></div>
             <div class="field"><label for="guest-email">Email</label><input id="guest-email" type="email" autocomplete="email" inputmode="email"></div>
@@ -209,8 +213,12 @@
           <section class="step" data-step="7" hidden>
             <h2 tabindex="-1">Review</h2>
             <div class="summary" id="review-summary"></div>
-            <p class="caution">The button opens an email to Crust2crumbft@gmail.com in your mail app. Nothing is booked, held, or charged on this page. Send the email yourself.</p>
-            <p><a id="mail-fallback" href="mailto:Crust2crumbft@gmail.com">Open email to Crust2crumbft@gmail.com</a></p>
+            <p class="caution">Send message delivers this request to Crust2crumbft@gmail.com. It does not book the date, hold it, or take a payment.</p>
+            <div id="inquire-done" hidden>
+              <h2>Message sent</h2>
+              <p>The message was sent to Crust2crumbft@gmail.com. It does not book the event or take a payment.</p>
+            </div>
+            <p id="mail-fallback" hidden>The message was not sent. <a id="inquire-mailto" href="mailto:Crust2crumbft@gmail.com">Email Crust2crumbft@gmail.com</a></p>
           </section>
         </div>
       </div>

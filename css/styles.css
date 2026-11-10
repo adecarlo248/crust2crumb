@@ -572,6 +572,21 @@ h3 { margin: 0; font-size: 1.05rem; letter-spacing: 0.01em; }
 }
 .sticky-cta .btn { flex: 1; }
 .sticky-cta.is-hidden { display: none; }
+body.contact-page .sticky-cta { display: none; }
+body.contact-page.has-sticky { padding-bottom: 28px; }
+#contact-form, #contact-done, #inquire-done { scroll-margin-top: 110px; }
+#contact-form { padding-bottom: 12px; }
+.company-website {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 .book-shell { padding: 18px 0 48px; }
 .progress {

@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body class="has-sticky">
+<body class="contact-page has-sticky">
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="nav">
@@ -48,9 +48,13 @@
           <p><a href="https://use1app.com/r/crust2crumb/">Leave a review</a></p>
         </div>
         <div>
-          <form id="contact-form" action="mailto:Crust2crumbft@gmail.com" method="post" enctype="text/plain" novalidate>
-            <p class="fine">This opens an email to Crust2crumbft@gmail.com in your mail app. It does not send from this website, book the event, or take a payment.</p>
+          <form id="contact-form" novalidate>
             <p class="error" id="contact-error" role="alert"></p>
+            <p id="contact-fallback" hidden>The message was not sent. <a id="contact-mailto" href="mailto:Crust2crumbft@gmail.com">Email Crust2crumbft@gmail.com</a></p>
+            <div class="company-website" aria-hidden="true">
+              <label for="company-website">Company website</label>
+              <input id="company-website" name="company_website" type="text" autocomplete="off" tabindex="-1" aria-hidden="true">
+            </div>
             <div class="field">
               <label for="contact-name">Name</label>
               <input id="contact-name" name="name" autocomplete="name" required>
@@ -79,8 +83,12 @@
               <label for="contact-allergies">Allergies or dietary concerns <span class="fine">(optional)</span></label>
               <textarea id="contact-allergies" name="allergies"></textarea>
             </div>
-            <button class="btn" type="submit">Open email to Crust2crumbft@gmail.com</button>
+            <button class="btn" type="submit" id="contact-send">Send message</button>
           </form>
+          <div id="contact-done" hidden>
+            <h2>Message sent</h2>
+            <p>The message was sent to Crust2crumbft@gmail.com. It does not book the event or take a payment.</p>
+          </div>
         </div>
       </div>
     </section>
