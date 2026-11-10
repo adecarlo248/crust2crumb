@@ -405,12 +405,27 @@ h3 { margin: 0; font-size: 1.05rem; letter-spacing: 0.01em; }
 .entry-links a { font-weight: 800; text-underline-offset: 3px; }
 .caption { margin: 8px 0 0; color: var(--brown-soft); font-size: 0.92rem; }
 #plates, #trays, .tray-offer { scroll-margin-top: 110px; }
-.tray-offer h2 { margin-bottom: 0; }
 .tray-offer .photo-frame { background: var(--cream); }
 .tray-offer .caption {
+  margin: 0;
+  padding: 12px 18px 16px;
   color: var(--brown);
   font-weight: 800;
   background: var(--cream);
+  text-align: start;
+  line-height: 1.35;
+  overflow-wrap: break-word;
+}
+.tray-offer .caption h2 {
+  margin: 0;
+  color: inherit;
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.35;
+  text-wrap: wrap;
+  overflow-wrap: break-word;
 }
 .tray-lists { display: grid; gap: 18px; margin-top: 16px; }
 .tray-lists h3 {
