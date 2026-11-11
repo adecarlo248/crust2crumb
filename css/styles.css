@@ -313,11 +313,12 @@ h3 { margin: 0; font-size: 1.05rem; letter-spacing: 0.01em; }
 }
 .chef-story h2 { color: var(--gold); }
 .chef-story p { color: #fff6ea; }
-.chef-layout { display: grid; gap: 18px; align-items: start; }
-.chef-photo { margin: 0; max-width: 420px; order: -1; }
+.chef-layout { display: grid; gap: 22px; align-items: start; }
+.chef-side { display: grid; gap: 12px; align-content: start; order: -1; }
+.chef-photo { margin: 0; width: min(230px, 72%); justify-self: center; }
 .chef-photo img { width: 100%; height: auto; border-radius: 18px; }
 .chef-photo figcaption { margin-top: 8px; font-weight: 800; letter-spacing: 0.04em; }
-.chef-bio { margin-top: 28px; max-width: 46rem; }
+.chef-bio { margin: 0; max-width: none; }
 .chef-bio p { margin: 0 0 14px; }
 #catering-cards { padding-bottom: 40px; }
 #catering-cards .specials { margin-top: 20px; }
@@ -353,6 +354,10 @@ h3 { margin: 0; font-size: 1.05rem; letter-spacing: 0.01em; }
   color: #fff6ea;
 }
 .board-specials .price { color: var(--gold); font-size: 1.6rem; font-family: var(--display); font-weight: 400; }
+.board-specials .price.price-lines {
+  align-items: flex-start;
+  font-size: clamp(1.2rem, 2.4vw, 1.45rem);
+}
 .board-specials .photo-frame { max-width: 520px; margin-left: auto; margin-right: auto; }
 .board-specials .photo-frame img { width: 100%; max-height: 68vh; object-fit: cover; object-position: top center; }
 .board-specials .caption a { color: var(--gold); }
@@ -501,6 +506,14 @@ h3 { margin: 0; font-size: 1.05rem; letter-spacing: 0.01em; }
   font-weight: 700;
 }
 .price { font-variant-numeric: tabular-nums; color: var(--red-deep); white-space: nowrap; }
+.price-lines {
+  white-space: normal;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  line-height: 1.15;
+}
 .event-list { display: flex; flex-wrap: wrap; gap: 8px; }
 .event-list li {
   background: #fff;
@@ -528,6 +541,11 @@ h3 { margin: 0; font-size: 1.05rem; letter-spacing: 0.01em; }
 .truck-menu .desc { margin: 6px 0 0; font-weight: 500; color: #f3e2cf; font-size: 0.98rem; }
 .truck-menu .group { margin: 0 0 18px; }
 .truck-menu .price-row { border-bottom-color: rgba(255, 246, 234, 0.16); align-items: start; }
+@media (max-width: 719px) {
+  .truck-menu .price-row:has(.price-lines) { flex-wrap: wrap; row-gap: 6px; }
+  .truck-menu .price-row:has(.price-lines) > div { flex: 1 1 100%; }
+  .truck-menu .price-row:has(.price-lines) .price-lines { width: 100%; }
+}
 .allergen {
   margin: 8px 0 16px;
   padding: 12px;
@@ -789,8 +807,9 @@ body.is-booking { padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px))
   .plate-grid img { aspect-ratio: 5 / 4; }
   .tray-lists { grid-template-columns: 1fr 1fr; align-items: start; }
   .event-terms { padding: 28px 28px 32px; }
-  .chef-layout { grid-template-columns: 1.15fr 0.85fr; }
-  .chef-photo { justify-self: end; order: 0; }
+  .chef-layout { grid-template-columns: 1.15fr 0.85fr; gap: 32px; }
+  .chef-side { order: 0; }
+  .chef-photo { width: 250px; justify-self: start; }
   .menu-layout { grid-template-columns: minmax(260px, 0.72fr) 1.28fr; align-items: start; }
 }
 
