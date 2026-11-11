@@ -435,6 +435,46 @@ h3 { margin: 0; font-size: 1.05rem; letter-spacing: 0.01em; }
 }
 .tray-lists ul { margin: 0; padding-left: 1.15rem; display: grid; gap: 8px; }
 
+#event-terms { scroll-margin-top: 96px; }
+.event-terms {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--gold);
+  border-radius: 18px;
+  padding: 18px 16px 22px;
+}
+.event-terms h2 { margin-bottom: 10px; }
+.event-terms .lede { margin-bottom: 2px; }
+.event-terms h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.45rem, 5vw, 1.85rem);
+  line-height: 1.05;
+  margin: 26px 0 10px;
+}
+.event-terms ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 8px;
+}
+.event-terms li::marker { color: var(--red); }
+.event-terms .terms-close p {
+  margin: 0 0 12px;
+  max-width: 40rem;
+}
+.event-terms .terms-close p:last-child { margin-bottom: 0; }
+.terms-note {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+}
+.terms-note a { font-weight: 800; text-underline-offset: 3px; white-space: nowrap; }
+.page-intro > .terms-note { margin: 0; }
+
 .quote {
   margin: 0;
   padding: 0 0 0 14px;
@@ -748,6 +788,7 @@ body.is-booking { padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px))
   .board-mosaic { grid-template-columns: 1.36fr 1fr; align-items: start; }
   .plate-grid img { aspect-ratio: 5 / 4; }
   .tray-lists { grid-template-columns: 1fr 1fr; align-items: start; }
+  .event-terms { padding: 28px 28px 32px; }
   .chef-layout { grid-template-columns: 1.15fr 0.85fr; }
   .chef-photo { justify-self: end; order: 0; }
   .menu-layout { grid-template-columns: minmax(260px, 0.72fr) 1.28fr; align-items: start; }
