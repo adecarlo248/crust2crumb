@@ -360,7 +360,10 @@ h3 { margin: 0; font-size: 1.05rem; letter-spacing: 0.01em; }
 }
 .board-specials .photo-frame { max-width: 520px; margin-left: auto; margin-right: auto; }
 .board-specials .photo-frame img { width: 100%; max-height: 68vh; object-fit: cover; object-position: top center; }
-.board-specials .caption a { color: var(--gold); }
+.board-specials .photo-frame .btn {
+  width: calc(100% - 28px);
+  margin: 12px 14px 14px;
+}
 .hero-card > * { margin: 0; }
 .hero-logo { width: 76px; height: 76px; border-radius: 16px; }
 .sign-quote {
@@ -649,6 +652,12 @@ body.contact-page .sticky-cta { display: none; }
 body.contact-page.has-sticky { padding-bottom: 28px; }
 #contact-form, #contact-done, #inquire-done { scroll-margin-top: 110px; }
 #contact-form { padding-bottom: 12px; }
+#contact-form input[type="date"],
+#contact-form input[type="time"] {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+}
 .company-website {
   position: absolute;
   width: 1px;
