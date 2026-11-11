@@ -8,6 +8,14 @@
   var sendBtn = document.getElementById("contact-send");
   if (!form) return;
 
+  var dateInput = document.getElementById("contact-date");
+  if (dateInput) {
+    var today = new Date();
+    var month = String(today.getMonth() + 1).padStart(2, "0");
+    var day = String(today.getDate()).padStart(2, "0");
+    dateInput.min = today.getFullYear() + "-" + month + "-" + day;
+  }
+
   function mailtoHref(subject, body) {
     return "mailto:Crust2crumbft@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
   }
@@ -26,11 +34,14 @@
     var email = document.getElementById("contact-email").value.trim();
     var details = document.getElementById("contact-details").value.trim();
     var location = document.getElementById("contact-location").value.trim();
-    var when = document.getElementById("contact-when").value.trim();
+    var date = document.getElementById("contact-date").value.trim();
+    var time = document.getElementById("contact-time").value.trim();
+    if (time.length > 5) time = time.slice(0, 5);
+    var when = date && time ? date + ", " + time : "";
     var allergies = document.getElementById("contact-allergies").value.trim();
     var trap = document.getElementById("company-website");
-    if (!name || !phone || !email || !details || !location || !when) {
-      error.textContent = "Add your name, phone number, email, event details, location, and time and date.";
+    if (!name || !phone || !email || !details || !location || !date || !time) {
+      error.textContent = "Add your name, phone number, email, event details, location, date, and start time.";
       if (fallback) fallback.hidden = true;
       return;
     }
@@ -49,7 +60,7 @@
       "Email: " + email,
       "Details of event: " + details,
       "Location of event: " + location,
-      "Time and date: " + when,
+      "Date and start time: " + when,
       "Allergies or dietary concerns: " + allergies
     ].join("\n");
     if (sendBtn) sendBtn.disabled = true;
